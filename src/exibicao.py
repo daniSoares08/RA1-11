@@ -6,6 +6,6 @@
 from __future__ import annotations
 
 
-def exibirResultados(mensagens: list[str]) -> None:
-    for mensagem in mensagens:
-        print(mensagem)
+def exibirResultados(resultados: list[str]) -> None:
+    for indice, resultado in enumerate(resultados, start=1):
+        print("Linha {0}: resultado salvo em {1}".format(indice, resultado))

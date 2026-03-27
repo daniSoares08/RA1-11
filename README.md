@@ -13,25 +13,22 @@
 - Professor: Frank Coelho de Alcantara
 - Grupo: RA1 11
 
-## Divisao inicial do trabalho
+## Estado atual
 
-- Daniel: administracao do repositorio, `parseExpressao`, `gerarAssembly` e `lerArquivo`
-- Victor: `executarExpressao`, memoria, `RES` e testes do executor
-- Giovanni: `main`, `exibirResultados`, integracao e testes de fluxo
+- estrutura do projeto organizada
+- leitura de arquivo e `main` sem menu interativo funcionando
+- AFD de `parseExpressao` implementado por funcoes
+- `executarExpressao` com memoria, `RES` e expressoes aninhadas integrado
+- arquivos de teste e testes unitarios iniciais adicionados
+- geracao final de Assembly segue em consolidacao
 
-## Estrutura prevista
+## Estrutura
 
-- `main.py`: ponto de entrada
+- `main.py`: ponto de entrada do programa
+- `src/arquivos.py`: leitura do arquivo de entrada
 - `src/lexer.py`: `parseExpressao` e estados do AFD
-- `src/executor.py`: `executarExpressao`
-- `src/assembly.py`: `gerarAssembly`
-- `src/arquivos.py`: leitura de arquivo e persistencia das saidas
-- `src/exibicao.py`: exibicao dos resultados
-- `src/tipos.py`: estruturas compartilhadas
+- `src/executor.py`: `executarExpressao` e montagem da arvore de cada linha
+- `src/assembly.py`: geracao do programa Assembly
+- `src/exibicao.py`: `exibirResultados`
+- `src/tipos.py`: estruturas de apoio
 - `tests/`: testes unitarios e de integracao
-
-## Proximos passos
-
-- fechar assinaturas das funcoes obrigatorias
-- subir o primeiro conjunto de testes
-- integrar o fluxo por partes sem misturar responsabilidades
