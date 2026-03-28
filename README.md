@@ -15,20 +15,7 @@
 
 ## Estado atual
 
-- estrutura do projeto organizada
-- leitura de arquivo e `main` sem menu interativo funcionando
-- AFD de `parseExpressao` implementado por funcoes
-- `executarExpressao` com memoria, `RES` e expressoes aninhadas integrado
-- arquivos de teste e testes unitarios iniciais adicionados
-- geracao final de Assembly segue em consolidacao
-
-## Estrutura
-
-- `main.py`: ponto de entrada do programa
-- `src/arquivos.py`: leitura do arquivo de entrada
-- `src/lexer.py`: `parseExpressao` e estados do AFD
-- `src/executor.py`: `executarExpressao` e montagem da arvore de cada linha
-- `src/assembly.py`: geracao do programa Assembly
-- `src/exibicao.py`: `exibirResultados`
-- `src/tipos.py`: estruturas de apoio
-- `tests/`: testes unitarios e de integracao
+- leitura do arquivo, analise lexica, montagem da arvore e geracao de Assembly integradas
+- persistencia do ultimo arquivo de tokens e do ultimo programa Assembly pronta
+- cobertura principal de lexer, executor, arquivos e assembly presente
+- falta apenas a revisao final do README e o fechamento do teste de pipeline completo

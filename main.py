@@ -7,7 +7,12 @@ from __future__ import annotations
 
 import sys
 
-from src.arquivos import lerArquivo
+from src.arquivos import (
+    garantirDiretorioSaidas,
+    lerArquivo,
+    salvarAssemblyUltimaExecucao,
+    salvarTokensUltimaExecucao,
+)
 from src.assembly import gerarProgramaAssembly
 from src.exibicao import exibirResultados
 from src.executor import executarExpressao
@@ -27,6 +32,7 @@ def main() -> int:
 
         estado_programa = EstadoPrograma()
         planos = []
+        tokens_saida: list[str] = []
 
         for indice_linha, linha in enumerate(linhas, start=1):
             if not linha.strip():
@@ -34,11 +40,16 @@ def main() -> int:
 
             tokens_linha: list[str] = []
             parseExpressao(linha, tokens_linha, indice_linha)
-            planos.append(executarExpressao(tokens_linha, estado_programa, indice_linha))
+            plano = executarExpressao(tokens_linha, estado_programa, indice_linha)
+
+            planos.append(plano)
+            tokens_saida.extend(tokens_linha)
 
         codigo_assembly = gerarProgramaAssembly(planos, estado_programa)
-        if not codigo_assembly.strip():
-            raise ValueError("Falha ao gerar o codigo Assembly")
+
+        garantirDiretorioSaidas()
+        salvarTokensUltimaExecucao(tokens_saida, "saidas/ultimo_tokens.txt")
+        salvarAssemblyUltimaExecucao(codigo_assembly, "saidas/ultimo_programa_armv7.s")
 
         exibirResultados([plano.rotulo_resultado for plano in planos])
         return 0
