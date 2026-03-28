@@ -9,7 +9,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from src.arquivos import lerArquivo
+from src.arquivos import (
+    garantirDiretorioSaidas,
+    lerArquivo,
+    salvarAssemblyUltimaExecucao,
+    salvarTokensUltimaExecucao,
+)
 
 
 class TestArquivos(unittest.TestCase):
@@ -27,6 +32,34 @@ class TestArquivos(unittest.TestCase):
         linhas: list[str] = []
         with self.assertRaises(FileNotFoundError):
             lerArquivo("nao_existe.txt", linhas)
+
+    def test_salvar_artefatos(self) -> None:
+        with tempfile.TemporaryDirectory() as diretorio:
+            caminho_tokens = Path(diretorio) / "saidas" / "tokens.txt"
+            caminho_assembly = Path(diretorio) / "saidas" / "programa.s"
+
+            salvarTokensUltimaExecucao(["(", "1", "RES", ")"], str(caminho_tokens))
+            salvarAssemblyUltimaExecucao(".text\n", str(caminho_assembly))
+
+            self.assertEqual(
+                caminho_tokens.read_text(encoding="utf-8").splitlines(),
+                ["(", "1", "RES", ")"],
+            )
+            self.assertEqual(caminho_assembly.read_text(encoding="utf-8"), ".text\n")
+
+    def test_garantir_diretorio_saidas(self) -> None:
+        with tempfile.TemporaryDirectory() as diretorio:
+            atual = Path.cwd()
+            try:
+                Path(diretorio).mkdir(parents=True, exist_ok=True)
+                import os
+
+                os.chdir(diretorio)
+                garantirDiretorioSaidas()
+                self.assertTrue(Path("saidas").exists())
+                self.assertTrue(Path("saidas").is_dir())
+            finally:
+                os.chdir(atual)
 
 
 if __name__ == "__main__":
